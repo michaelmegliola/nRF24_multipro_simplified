@@ -275,7 +275,7 @@ int calc_throttle(long flightMillis)
   float flightSeconds = (float) flightMillis / 1000.0;
   float ascend = MAX_THROTTLE * pow(flightSeconds, 2.0);
   float descend = MAX_THROTTLE/((flightSeconds + 47.0)/48.0);
-  float throttle = min(ascend, descend);
+  float throttle = max (min(ascend, descend), THROTTLE_OFF);
   bool descending = (descend < ascend);
   bool terminate = descending && (throttle < MIN_THROTTLE);
   return terminate ? (int) THROTTLE_OFF : (int) throttle;
